@@ -20,19 +20,23 @@ Class TaxService
         $subTotal = 0;
 
         foreach($carts as $item) {
-            if($item->product->tax_id) {
-                if($item->product->tax_type == "include") {
-                    $countInclude = $this->countIncludeTax($item->amount * $item->product->sell_price(), $item->product->tax->percent);
-                    
-                    $totalTax += $countInclude['tax'];
-                    $subTotal += $countInclude['total'];
+            if($item->product_id) {
+                if($item->product->tax_id) {
+                    if($item->product->tax_type == "include") {
+                        $countInclude = $this->countIncludeTax($item->amount * $item->product->sell_price(), $item->product->tax->percent);
+                        
+                        $totalTax += $countInclude['tax'];
+                        $subTotal += $countInclude['total'];
+                    } else {
+                        $totalTax += $this->countExcludeTax($item->product->sell_price() * $item->amount, $item->product->tax->percent);
+                        $subTotal += $item->product->sell_price() * $item->amount;
+                    }
                 } else {
-                    $totalTax += $this->countExcludeTax($item->product->sell_price() * $item->amount, $item->product->tax->percent);
                     $subTotal += $item->product->sell_price() * $item->amount;
-                }
+                }  
             } else {
-                $subTotal += $item->product->sell_price() * $item->amount;
-            }  
+                $subTotal += $item->price * $item->amount;
+            }
         }
 
         return [

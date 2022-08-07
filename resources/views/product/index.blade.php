@@ -28,6 +28,7 @@
                 <th class="py-2 text-right">Buy Price</th>
                 <th class="py-2 text-right">Sell Price</th>
                 <th class="py-2">Current Stock</th>
+                {{-- <th class="py-2">Created at</th> --}}
                 <th class="py-2">Option</th>
             </thead>
             <tbody>
@@ -45,6 +46,7 @@
                     <td class="py-2">{{ $item->sku }}</td>
                     <td class="py-2 text-right">Rp. {{ number_format($item->buy_price()) }}</td>
                     <td class="py-2 text-right">Rp. {{ number_format($item->sell_price()) }}</td>
+                    {{-- <td class="py-2 text-right">{{ $item->created_at }}</td> --}}
                     <td class="py-2 text-center">
                         @if ($item->is_tracked)
                             {{ number_format($item->latest_stock()) }}
@@ -66,7 +68,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="6" class="py-3">Data not found</td>
+                    <td colspan="7" class="py-3 text-center">Data not found</td>
                 </tr>
                 @endforelse
             </tbody>

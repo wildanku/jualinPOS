@@ -146,10 +146,10 @@ Class ProductService
             }
 
             if($request->photo) {
-                $imageName = $product->name.'.'.$request->photo->extension();
-                $request->photo->storeAs('products', $imageName);  
+                $imageName = date('Ymd-His').'.'.$request->photo->extension();
+                $request->photo->move(public_path('images/products'), $imageName);  
 
-                $product->photo = storage_path('public/products'.$imageName);
+                $product->photo = 'images/products/'.$imageName;
                 $product->save();
             }
 

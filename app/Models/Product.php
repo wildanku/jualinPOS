@@ -65,6 +65,16 @@ class Product extends Model
         }
     }
 
+    public function countTax()
+    {
+        $taxService = new TaxService();
+        if($this->tax && $this->tax_type == "include") {
+            return $taxService->countIncludeTax($this->sell_price(), $this->tax->percent)['tax'];
+        } else {
+            return $taxService->countExcludeTax($this->sell_price(), $this->tax->percent);
+        }
+    }
+
     public function stock_histories()
     {
         return $this->hasMany(ProductStockHistory::class);
@@ -72,13 +82,15 @@ class Product extends Model
 
     public function latest_stock()
     {
-        $stock = ProductStockHistory::where('product_id',$this->id)->latest()->first();
+        if($this->is_tracked) {
+            $stock = ProductStockHistory::where('product_id',$this->id)->latest()->first();
 
-        if($stock) {
-            return $stock->current_stock ?? '';
-        } else {
-            return false;
+            if($stock) {
+                return $stock->current_stock ?? '';
+            } 
         }
+
+        return false;
     }
 
     public function carts()

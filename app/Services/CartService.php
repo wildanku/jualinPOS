@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Cart;
+use App\Models\CustomProduct;
 use App\Models\Product;
 use App\Models\Tax;
 use App\Models\User;
@@ -20,6 +21,10 @@ Class CartService
         $products = Product::whereIn('id',$carts->pluck('product_id'))->get();
         // dd($carts);
         $taxes = $taxService->calculateCart($carts);
+
+        if(!$carts) {
+            return false;
+        }
         
         return [
             'carts' => $carts,
@@ -52,6 +57,47 @@ Class CartService
                     'user_id' => $user->id,
                     'amount' => $request->amount,
                 ]);
+            }
+            
+        });
+
+        return [
+            'code' => 200,
+            'success' => true,
+            'message' => 'product added'
+        ];
+    }
+
+    public function createCustom($request)
+    {
+        $user = Auth::user();
+
+        DB::transaction(function () use($request, $user) {
+            
+            if(isset($request->amount) && $request->amount == 0) {
+                Cart::where(['custom_product_id' => $request->product_id, 'user_id' => $user->id])->delete();
+            } else {
+                // update product price
+
+                if($request->price) {
+                    Cart::updateOrCreate(['custom_product_id' => $request->product_id, 'user_id' => $user->id], [
+                        'amount' => $request->amount ?? 1,
+                        'custom_product_id' => $request->product_id,
+                        'user_id' => $user->id,
+                        'price' => $request->price ?? null,
+                    ]);
+
+                    $productCustom = CustomProduct::find($request->product_id);
+                    $productCustom->price = $request->price;
+                    $productCustom->save();
+
+                } else {
+                    Cart::updateOrCreate(['custom_product_id' => $request->product_id, 'user_id' => $user->id], [
+                        'amount' => $request->amount ?? 1,
+                        'custom_product_id' => $request->product_id,
+                        'user_id' => $user->id,
+                    ]);
+                }
             }
             
         });

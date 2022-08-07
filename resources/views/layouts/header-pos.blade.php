@@ -1,7 +1,7 @@
 <div class="py-3 w-full flex justify-between items-center mt-3">
     <div class="flex gap-5 items-center">
-        <img src="{{ asset('icon-jualinhub.png') }}" class="w-20 block" alt="">
-        <h3 class="text-xl">{{ Carbon\Carbon::now()->format('l, d M Y') }} <br> <small id="txt"></small></h3>
+        <img src="{{ asset('icon-jualinhub.png') }}" class="w-16 block" alt="">
+        <h3 class="text-lg">{{ Carbon\Carbon::now()->format('l, d M Y') }} | <small id="txt"></small></h3>
     </div>
 
     <div class="flex gap-2 items-center">

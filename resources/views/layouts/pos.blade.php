@@ -19,29 +19,28 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resource/css/pos.css'])
 
     @stack('css')
 
-    <style>
-        
-    </style>
-
 </head>
 <body>
+    @include('layouts.alert')
     <div class="w-full min-h-screen bg-blue-50">
-        <div class="max-w-screen-2xl min-h-screen mx-auto pt-2 px-4 ">
+        <div class="max-w-screen-2xl min-h-screen mx-auto pt-2 px-4 md:px-12 ">
             @include('layouts.header-pos')
             <div class="mt-4 py-2">
                 @yield('content')
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="{{ asset('js/jquery.js') }}" ></script>
+    <script src="{{ asset('js/mask.js') }}" ></script>
+    
     @stack('js')
     <script>
         window.onload = startTime();
-
+        
         function startTime() {
             const today = new Date();
             let h = today.getHours();

@@ -58,6 +58,23 @@ class CartController extends Controller
         ],$addCart['code']);
     }
 
+    public function createCustom(Request $request)
+    {
+        $request->validate([
+            'product_id' => 'required|numeric',
+            'price' => 'nullable|sometimes|numeric|min:0',
+            'amount' => 'nullable|sometimes|numeric|min:0'
+        ]);
+
+        $addCart = $this->cartService->createCustom($request);
+
+        return response([
+            'http_code' => $addCart['code'],
+            'success' => $addCart['success'],
+            'message' => $addCart['message']
+        ],$addCart['code']);
+    }
+
     public function clear()
     {
         $this->cartService->clearCart();

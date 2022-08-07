@@ -4,7 +4,7 @@ function productDOM(data) {
             <img src="`+data.image+`" class="w-16 h-20 rounded object-cover" alt="">
             <div class="caption relative w-full">
                 <div>
-                    <div class="tooltip tooltip-bottom text-left" data-tip="`+data.name+`">
+                    <div class="tooltip tooltip-bottom text-left z-10" data-tip="`+data.name+`">
                         <span class="name leading-tight">`+data.name+`</span>
                     </div>
                     <div class="flex justify-between items-center">
@@ -15,10 +15,10 @@ function productDOM(data) {
                 <div class="absolute bottom-0 w-full">
                     <div class="flex justify-between items-center">
                         <small class="text-xs">SKU: `+data.sku+`</small>
-                        <div class="number flex gap-1">
-                            <span onclick="minusProduct(this,`+data.id+`)" class="minus block w-6 h-6 text-center cursor-pointer rounded bg-gray-200">-</span>
-                            <input onchange="changeAmount(this,`+data.id+`)" type="text" id="value`+data.id+`" class="w-12 h-6 text-center rounded border border-gray-400 px-1 text-md product-amount" value="`+data.in_cart+`"/>
-                            <span onclick="addProduct(this,`+data.id+`)" class="plus block w-6 h-6 text-center cursor-pointer rounded bg-gray-200">+</span>
+                        <div class="number flex z-0">
+                            <span onclick="minusProduct(this,`+data.id+`)" class="minus block w-6 h-6 text-center cursor-pointer bg-primary text-white">-</span>
+                            <input onchange="changeAmount(this,`+data.id+`)" type="text" id="value`+data.id+`" class="w-10 h-6 text-center border border-primary px-1 text-sm product-amount" value="`+data.in_cart+`"/>
+                            <span onclick="addProduct(this,`+data.id+`)" class="plus block w-6 h-6 text-center cursor-pointer bg-primary text-white">+</span>
                         </div>
                     </div>
                 </div>

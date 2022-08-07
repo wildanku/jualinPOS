@@ -13,7 +13,7 @@ module.exports = {
             fontFamily: {
                 sans: ['Lato', ...defaultTheme.fontFamily.sans],
             },
-        },
+        }, 
     },
 
     plugins: [

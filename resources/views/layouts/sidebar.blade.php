@@ -36,7 +36,7 @@
     <div class="py-2">
         <a href="#" class="w-full block p-4 rounded-xl text-center shadow-lg bg-white cursor-pointer hover:bg-primary sidemenu">
             <ion-icon class="text-gray-600" name="cog-outline"></ion-icon>
-            <span class="text-md block">Transaction</span>
+            <span class="text-md block">Setting</span>
         </a>
     </div>
 

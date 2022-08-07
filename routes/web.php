@@ -27,6 +27,8 @@ Route::middleware('auth')->group(function() {
     
     Route::controller(PosController::class)->prefix('pos')->group(function() {
         Route::get('/', 'index')->name('pos.index');
+        Route::post('/', 'storeTransaction')->name('pos.store-transaction');
+        Route::get('/transaction/{posTransaction}', 'showTransaction')->name('pos.show-transaction');
     });
 
     Route::prefix('dashboard')->group(function() {
@@ -35,12 +37,19 @@ Route::middleware('auth')->group(function() {
     });
 
     Route::prefix('ajax')->name('ajax.')->group(function() {
-        Route::get('/products', [ApiProductController::class, 'productsPos'])->name('products');
+        Route::controller(ApiProductController::class)->prefix('product')->name('product.')->group(function() {
+            Route::get('/products', 'productsPos')->name('get');
+            Route::get('/product-custom','getCustomProduct')->name('custom');
+            Route::post('/product-custom/create','createCustomProduct')->name('custom.create');
+        });
         
         Route::controller(CartController::class)->prefix('cart')->name('cart.')->group(function() {
             Route::get('/', 'get')->name('get');
             Route::post('/', 'create')->name('create');
+            Route::post('/createCustom', 'createCustom')->name('create.custom');
             Route::post('/delete-cart', 'clear')->name('delete');
+
+            Route::post('/add-custom-cart', 'addCustomCart')->name('customCart');
         });
     });
 });
