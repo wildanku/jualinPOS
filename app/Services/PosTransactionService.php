@@ -84,23 +84,25 @@ Class PosTransactionService
 
             // 4.2 Taxes Transaction and Taxes recap
             foreach ($carts['carts']->whereNotNull('product_id') as $cart) {
-                $taxTransaction = Transaction::create([
-                    'user_id' => Auth::user()->id,
-                    'account_id' => $cart->product->tax->account_id,
-                    'type' => 'income',
-                    'transaction_type' => 'pos',
-                    'amount' => $cart->product->countTax(), // amount transaction before tax and discount
-                    'reference' => 'App\Models\PosTransaction',
-                    'document_id' => $posTransaction->id,
-                ]);
-
-                TaxTransaction::create([
-                    'tax_id' => $cart->product->tax_id,
-                    'transaction_id' => $taxTransaction->id,
-                    'hasModelRelation' => 'App\Models\Product',
-                    'relation_id' => $cart->product_id,
-                    'amount' => $taxTransaction->amount
-                ]);
+                if($cart->product->tax) {
+                    $taxTransaction = Transaction::create([
+                        'user_id' => Auth::user()->id,
+                        'account_id' => $cart->product->tax->account_id,
+                        'type' => 'income',
+                        'transaction_type' => 'pos',
+                        'amount' => $cart->product->countTax(), // amount transaction before tax and discount
+                        'reference' => 'App\Models\PosTransaction',
+                        'document_id' => $posTransaction->id,
+                    ]);
+    
+                    TaxTransaction::create([
+                        'tax_id' => $cart->product->tax_id,
+                        'transaction_id' => $taxTransaction->id,
+                        'hasModelRelation' => 'App\Models\Product',
+                        'relation_id' => $cart->product_id,
+                        'amount' => $taxTransaction->amount
+                    ]);
+                }
             }
 
             // 4.3 Discount Transaction 
