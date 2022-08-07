@@ -1,0 +1,56 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.product .caption .name,
+.product .caption .price {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+.cartProductName,
+.productName {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;    /* fallback */
+    -webkit-line-clamp: 1; /* number of lines to show */
+    -webkit-box-orient: vertical;
+}
+
+.labl > input{ /* HIDE RADIO */
+    visibility: hidden; /* Makes input not-clickable */
+    position: absolute; /* Remove input from document flow */
+}
+.labl > input + div{ /* DIV STYLES */
+    cursor:pointer;
+    border:1px solid #379bd8;
+    color: #379bd8; 
+    padding: 0px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+}
+
+
+.labl > input + div span {
+    border: solid 2px #379bd8;
+}
+
+.labl > input:checked + div span { 
+    background-color: #007EBD;
+    border: solid 2px #fff;
+}
+
+.labl > input:checked + div { 
+    background-color: #007EBD;
+    color: #fff;
+}
