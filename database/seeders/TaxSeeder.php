@@ -17,12 +17,13 @@ class TaxSeeder extends Seeder
     {
         Tax::create([
             'name' => 'PPN',
-            'percent' => '11'
+            'percent' => '11',
+            'account_id' => 24,
         ]);
 
-        Tax::create([
-            'name' => 'PPh23',
-            'percent' => '2.5'
-        ]);
+        // Tax::create([
+        //     'name' => 'PPh23',
+        //     'percent' => '2.5'
+        // ]);
     }
 }
