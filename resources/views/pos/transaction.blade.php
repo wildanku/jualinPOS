@@ -5,7 +5,7 @@
         <div class="flex justify-between items-start">
             <div>
                 <h1 class="text-xl">Transaction #{{$transaction->code}}</h1>
-                <span>{{$transaction->created_at->timezone('Asia/Jakarta')->format('d M Y, H:i')}}</span>
+                <span>{{$transaction->created_at->format('d M Y, H:i')}}</span>
             </div>
 
             <div class="gap-1 flex">

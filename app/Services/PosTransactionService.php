@@ -8,6 +8,7 @@ use App\Models\PosTransaction;
 use App\Models\PosTransactionDetail;
 use App\Models\TaxTransaction;
 use App\Models\Transaction;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -113,5 +114,66 @@ Class PosTransactionService
 
             return $posTransaction;
         });
+    }
+
+    public function transactions($type = 'all')
+    {
+        $transactions = new PosTransaction();
+        
+        if($type == 'all') {
+            $transactions = $transactions->orderBy('created_at','DESC')->paginate(30);
+        }
+
+        if($type == 'daily') {
+            $transactions = $transactions
+                                ->select(
+                                    DB::raw('DATE(created_at) as date'),
+                                    DB::raw('sum(grandTotal) as grand_total'),
+                                    DB::raw('count(id) as transaction_num')
+                                )
+                                ->groupBy('date')
+                                ->orderBy('date','desc')
+                                ->paginate(30);
+
+            
+        }
+
+        if($type == 'weekly') {
+            $transactions = $transactions
+                                ->select(
+                                    DB::raw('WEEK(created_at) as date'),
+                                    DB::raw('sum(grandTotal) as grand_total'),
+                                    DB::raw('count(id) as transaction_num')
+                                )
+                                ->groupBy('date')
+                                ->orderBy('date','desc')
+                                ->paginate(30);
+        }
+
+        if($type == 'monthly') {
+            $transactions = $transactions
+                                ->select(
+                                    DB::raw('MONTH(created_at) as date'),
+                                    DB::raw('sum(grandTotal) as grand_total'),
+                                    DB::raw('count(id) as transaction_num')
+                                )
+                                ->groupBy('date')
+                                ->orderBy('date','desc')
+                                ->paginate(30);
+        }
+
+        if($type == 'yearly') {
+            $transactions = $transactions
+                                ->select(
+                                    DB::raw('YEAR(created_at) as date'),
+                                    DB::raw('sum(grandTotal) as grand_total'),
+                                    DB::raw('count(id) as transaction_num')
+                                )
+                                ->groupBy('date')
+                                ->orderBy('date','desc')
+                                ->paginate(30);
+        }
+
+        return $transactions;
     }
 }

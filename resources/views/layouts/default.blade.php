@@ -16,6 +16,7 @@
     {{-- icon  --}}
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -41,7 +42,7 @@
         @php $withSidebar = $withSidebar ?? true; $withHeader = $withHeader ?? true; @endphp
         @include('layouts.alert')
         @if($withSidebar) 
-        <div class="max-w-screen-xl mx-auto p-6 relative">
+        <div class="max-w-screen-2xl mx-auto p-6 relative">
             <div class="absolute">
                 @include('layouts.sidebar')
             </div>
@@ -59,7 +60,7 @@
         @yield('content')
         @endif
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="{{ asset('js/jquery.js') }}" ></script>
     @stack('js')
     <script>
         window.onload = startTime();
@@ -71,6 +72,8 @@
             let s = today.getSeconds();
             m = checkTime(m);
             s = checkTime(s);
+            h = checkTime(h);
+
             document.getElementById('txt').innerHTML =  h + ":" + m + ":" + s;
             setTimeout(startTime, 1000);
         }

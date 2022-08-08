@@ -30,7 +30,7 @@ Class ProductService
             $products = $products->where('name','like','%'.$request->q.'%')->orWhere('sku','like','%'.$request->q.'%');
         }
 
-        $products = $products->take($request->offset ?? 30)->get();
+        $products = $products->take($request->offset ?? 18)->get();
 
         return $products;
     }
@@ -154,6 +154,59 @@ Class ProductService
             }
 
         });
+    }
+
+    public function import($data)
+    {
+        $find = Product::where('sku',$data['sku'])->exists();
+
+        if(!$find)  {
+            return DB::transaction(function () use($data) {
+                if($data['is_tracked'] == 1) {
+                    $is_tracked = 1;
+                } elseif($data['is_tracked'] == 0) {
+                    $is_tracked = 0;
+                }
+    
+                $product = Product::create([
+                    'name' => $data['name'] ?? '',
+                    'description' => $data['description'] ?? null,
+                    'sku' => $data['sku'] ?? null,
+                    'is_tracked' => $is_tracked,
+                    'tax_id' => $data['tax_id'] ?? null,
+                    'tax_type' => $data['tax_type'] ?? null
+                ]);
+    
+                if($data['buy_price']) {
+                    ProductPrice::create([
+                        'product_id' => $product->id,
+                        'type' => 'buy_price',
+                        'price' => isset($data['buy_price']) ? $data['buy_price'] : 0
+                    ]);
+                }
+    
+                if($data['sell_price']) {
+                    ProductPrice::create([
+                        'product_id' => $product->id,
+                        'type' => 'sell_price',
+                        'price' => isset($data['sell_price']) ? $data['sell_price'] : 0
+                    ]);
+                }
+    
+                if(isset($data['is_tracked'])) {
+                    if(($data['is_tracked'] == 1)) {
+                        ProductStockHistory::create([
+                            'product_id' => $product->id,
+                            'type' => 'in',
+                            'amount' => $data['stock'],
+                            'current_stock' => $data['stock'] ?? 0
+                        ]);
+                    }
+                }
+    
+            });
+        }
+        
     }
 
     public function adjustSaveStock($request) 

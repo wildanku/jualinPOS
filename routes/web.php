@@ -28,12 +28,18 @@ Route::middleware('auth')->group(function() {
     Route::controller(PosController::class)->prefix('pos')->group(function() {
         Route::get('/', 'index')->name('pos.index');
         Route::post('/', 'storeTransaction')->name('pos.store-transaction');
+        
+        Route::get('/transactions','transactions')->name('pos.transactions');
+        Route::get('/show-transaction/{posTransaction}','showTransactions')->name('pos.transaction.show');
         Route::get('/transaction/{posTransaction}', 'showTransaction')->name('pos.show-transaction');
+
     });
 
     Route::prefix('dashboard')->group(function() {
         Route::get('/', [DashboardController::class,'index'])->name('dashboard');
         Route::resource('product',ProductController::class);
+
+        Route::post('/product/import', [ProductController::class,'import'])->name('product.import');
     });
 
     Route::prefix('ajax')->name('ajax.')->group(function() {

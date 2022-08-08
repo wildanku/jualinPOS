@@ -3,41 +3,41 @@
 @section('content')
     <div class="flex gap-2 items-center">
         <x-arrow-component :url="route('product.index')" />
-        <h3 class="text-2xl m-0">Create Product</h3>
+        <h3 class="text-2xl m-0">{{__('product.create_product')}}</h3>
     </div>
 
-    <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
+    <form id="formProduct" action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mt-6 items-start">
         <div class="md:col-span-3 bg-white shadow rounded-lg p-5">
             <div class="form-control mb-3">
-                <label for="">Product Name <span class="text-red-600">*</span></label>
+                <label for="">{{__('product.product_name')}} <span class="text-red-600">*</span></label>
                 <input type="text" value="{{ old('name') }}" name="name" class="w-full rounded @error('name') border-red-600 @enderror border-gray-400">
                 @error('name') <small class="text-xs text-red-600">{{ $message }}</small>@enderror
             </div>
 
             <div class="form-control mb-3">
-                <label for="">Product SKU </label>
+                <label for="">{{__('product.product_sku')}}</label>
                 <input type="text" value="{{ old('sku') }}" name="sku" class="w-full rounded @error('sku') border-red-600 @enderror border-gray-400">
                 @error('sku') <small class="text-xs text-red-600">{{ $message }}</small>@enderror
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="form-control mb-3">
-                    <label for="">Buy Price</label>
-                    <input type="number" value="{{ old('buy_price',0) }}" min="0" name="buy_price" class="w-full rounded @error('buy_price') border-red-600 @enderror border-gray-400">
+                    <label for="">{{__('product.buy_price')}}</label>
+                    <input type="text" id="inputBuyPrice" value="{{ old('buy_price',0) }}" min="0" name="buy_price" class="w-full mask rounded @error('buy_price') border-red-600 @enderror border-gray-400">
                     @error('buy_price') <small class="text-xs text-red-600">{{ $message }}</small>@enderror
                 </div>
 
                 <div class="form-control mb-3">
-                    <label for="">Sell Price</label>
-                    <input type="number" value="{{ old('sell_price',0) }}" min="0" name="sell_price" class="w-full rounded @error('buy_price') border-red-600 @enderror border-gray-400">
+                    <label for="">{{__('product.sell_price')}}</label>
+                    <input type="text" id="inputSellPrice" value="{{ old('sell_price',0) }}" min="0" name="sell_price" class=" w-full mask rounded @error('buy_price') border-red-600 @enderror border-gray-400">
                     @error('sell_price') <small class="text-xs text-red-600">{{ $message }}</small>@enderror
                 </div>
             </div>
 
             <div class="form-control mb-3">
-                <label for="">Description</label>
+                <label for="">{{__('general.description')}}</label>
                 <textarea name="description" class="rounded @error('description') border-red-600 @enderror border-gray-400 " id="" cols="30" rows="10">{{ old('description') }}</textarea>
                 @error('description') <small class="text-xs text-red-600">{{ $message }}</small>@enderror
             </div>
@@ -46,15 +46,15 @@
         <div class="md:col-span-2 rounded-lg shadow bg-white p-5">
             
             <div class="form-control mb-3  @error('photo') border border-red-600 @enderror">
-                <label for="" >Product Image</label>
+                <label for="" >{{__('product.tax')}}</label>
                 <input type="file" name="photo" id="" value="{{ old('photo') }}">
                 @error('photo') <small class="text-xs text-red-600">{{ $message }}</small>@enderror
             </div>
 
             <div class="form-control mb-3">
-                <label for="">Tax</label>
+                <label for="">{{__('product.tax')}}</label>
                 <select name="tax_id" id="selectTax" class="w-full rounded  @error('tax_id') border-red-600 @enderror border-gray-400">
-                    <option value="" >No Tax</option>
+                    <option value="" >{{__('product.no_tax')}}</option>
                     @foreach (App\Models\Tax::select('id','name')->get() as $item)
                     <option @if(old('tax_id') == $item->id) selected @endif value="{{ $item->id }}"> {{ $item->name }}</option>
                     @endforeach
@@ -63,45 +63,45 @@
             </div>
 
             <div class="form-control mb-3" id="isTaxSelected" style="@if(!old('tax_id')) display: none @endif">
-                <label for="">Tax Type</label>
+                <label for="">{{__('product.tax_type')}}</label>
                 <div class="flex items-center gap-3 mt-2">
                     <label class="flex gap-2 items-center cursor-pointer">
                         <input type="radio" id="taxInclude" @if(!old('tax_id')) disabled @endif value="include" name="tax_type" class="radio " @if(old('tax_type') == 'include') checked @endif />
-                        <span class="label-text">Include</span> 
+                        <span class="label-text">{{__('product.tax_include')}}</span> 
                     </label>
 
                     <label class="flex gap-2 items-center cursor-pointer">
                         <input type="radio" id="taxExclude" @if(!old('tax_id')) disabled @endif value="exclude" name="tax_type" class="radio " @if(old('tax_type') == 'exclude' || !old('tax_type')) checked @endif />
-                        <span class="label-text">Exclude</span> 
+                        <span class="label-text">{{__('product.tax_exclude')}}</span> 
                     </label> 
                 </div>
                 @error('tax_type') <small class="text-xs text-red-600">{{ $message }}</small>@enderror
             </div>
 
             <div class="form-control mb-3 mt-4" >
-                <label for="">Product Tracked?</label>
+                <label for="">{{__('product.product_tracked')}}</label>
                 <div class="flex items-center gap-3 mt-2">
                     <label class="flex gap-2 items-center cursor-pointer">
                         <input type="radio" id="trackedYes" value="yes" name="is_tracked" class="radio " @if(old('is_tracked') == 'yes') checked @endif  />
-                        <span class="label-text">Yes</span> 
+                        <span class="label-text">{{__('general.yes')}}</span> 
                     </label>
 
                     <label class="flex gap-2 items-center cursor-pointer">
                         <input type="radio" id="trackedNo" value="no" name="is_tracked" class="radio " @if(old('is_tracked') == 'no' || !old('is_tracked') ) checked @endif/>
-                        <span class="label-text">No</span> 
+                        <span class="label-text">{{__('general.no')}}</span> 
                     </label> 
                 </div>
                 @error('is_tracked') <small class="text-xs text-red-600">{{ $message }}</small>@enderror
             </div>
 
             <div class="form-control mb-3 mt-3" id="isTracked" style="@if(!old('is_tracked')) display: none @endif">
-                <label for="">Current Stock</label>
-                <input type="number" value="{{ old('stock',0) }}" name="stock" id="inputStock" @if(!old('is_tracked')) disabled @endif class="w-full rounded @error('stock') border-red-600 @enderror border-gray-400">
+                <label for="">{{__('product.current_stock')}}</label>
+                <input type="text" value="{{ old('stock',0) }}" name="stock" id="inputStock" @if(!old('is_tracked')) disabled @endif class="w-full mask rounded @error('stock') border-red-600 @enderror border-gray-400">
                 @error('stock') <small class="text-xs text-red-600">{{ $message }}</small>@enderror
             </div>
 
             <div class="mt-6">
-                <button class="bg-primary py-2 w-full text-white uppercase rounded">Save</button>
+                <button class="bg-primary py-2 w-full text-white uppercase rounded">{{__('general.save')}}</button>
             </div>
         </div>
     </div>
@@ -110,6 +110,7 @@
 @endsection
 
 @push('js')
+    <script src="{{ asset('js/jquery.mask.js') }}" ></script>
     <script>
         $(document).ready(function() {
             $("#selectTax").on('change', function() {
@@ -135,7 +136,27 @@
                 $("#inputStock").prop('disabled',true)
             });
 
+            $(".mask").on('focus', function() {
+                if($(this).val() == 0) {
+                    $(this).val('');
+                }
+            });
+
+            $(".mask").on('change', function() {
+                if($(this).val() == '') {
+                    $(this).val(0);
+                }
+            });
+
+            $(".mask").mask('#,##0', {reverse: true});
+
+            $("#formProduct").on('submit', function() {
+                $(this).find('.mask').each(function () {
+                    $(this).unmask();
+                });
+            });
 
         });
+
     </script>
 @endpush

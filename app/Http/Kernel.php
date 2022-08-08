@@ -36,6 +36,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\TimeZone::class,
         ],
 
         'api' => [
@@ -43,7 +44,14 @@ class Kernel extends HttpKernel
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
+
+        'auth' => [
+            \Illuminate\Auth\Middleware\Authenticate::class,
+            \App\Http\Middleware\SetLocale::class,
+        ],
     ];
+
+    
 
     /**
      * The application's route middleware.

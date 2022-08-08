@@ -1,13 +1,19 @@
 @extends('layouts.default', ['withHeader' => false, 'withSidebar' => false])
 
 @section('content')
-    <div class="w-full min-h-screen flex items-center justify-center bg-primary">
-        <div class="w-1/4 bg-white pt-14 px-8 pb-8 rounded-xl shadow relative">
-            <div class="absolute" style="top: -50px; left: -50px">
-                <img src="{{ asset('icon-jualinhub.png') }}" style="width: 100px" alt="">
+    <div class="w-full min-h-screen flex items-center justify-center bg-primary p-6">
+        <div class="w-full max-w-md bg-white pt-14 px-8 pb-8 rounded-xl shadow relative">
+            <div class="absolute " style="top: -50px; left: -50px">
+                <img src="{{ asset('icon-jualinhub.png') }}" style="width: 100px" class="sm:w-8" alt="">
             </div>
 
-            <span class="text-2xl">Welcome,</span>
+            <span class="text-2xl">{{__('general.welcome')}},</span>
+
+            @error('email')
+            <div class="p-2 mt-2 pb-2 w-full rounded bg-red-100 text-red-600 text-xs">
+            {{ $message }}
+            </div>
+            @enderror
 
             <form action="{{ route('login') }}" class="mt-3" method="POST">
                 @csrf

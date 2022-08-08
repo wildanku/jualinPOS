@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\ProductImport;
 use App\Models\Product;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
@@ -125,5 +127,24 @@ class ProductController extends Controller
         });
 
         return redirect()->route('product.index')->with('success','Yeey, product deleted!');
+    }
+
+    public function import(Request $request)
+    {
+        // dd($request->all());
+        $file = $request->file('product');
+        $parseData = Excel::toArray(new ProductImport(), $file);
+        
+        foreach($parseData[0] as $data) {
+            $product['name'] = $data[2];
+            $product['sku'] = $data[1];
+            $product['is_tracked'] = 0;
+            $product['sell_price'] = $data[4] == "NULL" ? 0 : $data[4];
+            $product['buy_price'] = null;
+
+            $this->productService->import($product);
+        }
+
+        return true;
     }
 }

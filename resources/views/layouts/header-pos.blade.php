@@ -7,7 +7,7 @@
     <div class="flex gap-2 items-center">
         <div class="bg-primary pl-2 py-2 pr-8 rounded-full text-white cursor-pointer flex gap-2 items-center"><ion-icon name="person-circle-outline" style="font-size:24px"></ion-icon> {{ auth()->user()->name }}</div>
 
-        <a href="{{ route('dashboard') }}" onclick="return confirm('Are you sure want to quite POS Apps?');" class="bg-red-600 block hover:bg-red-700 rounded-full w-10 h-10 text-center flex justify-center items-center">
+        <a href="{{ route('dashboard') }}" onclick="return confirm('{{__('general.quite_pos_confirm')}}');" class="bg-red-600 block hover:bg-red-700 rounded-full w-10 h-10 text-center flex justify-center items-center">
             <ion-icon name="close" class="text-white " style="font-size: 24px"></ion-icon>
         </a>
     </div>

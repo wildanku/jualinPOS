@@ -40,9 +40,26 @@ class PosController extends Controller
         return redirect()->route('pos.show-transaction', $posTransaction->id);
     }
 
+    public function transactions(Request $request)
+    {
+        $request->validate([
+            'type' => 'sometimes|nullable|in:all,daily,weekly,monthly,yearly'
+        ]);
+
+        $transactions = $this->posTransactionService->transactions($request->type ?? 'all');
+
+        return view('pos.transactions', compact('transactions'));
+    }
+
     public function showTransaction(PosTransaction $posTransaction)
     {
         $transaction = $posTransaction;
         return view('pos.transaction', compact('transaction'));
+    }
+
+    public function showTransactions(PosTransaction $posTransaction)  
+    {
+        $transaction = $posTransaction;
+        return view('pos.show-transaction', compact('transaction'));
     }
 }
