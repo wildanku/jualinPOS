@@ -199,9 +199,9 @@
             return cashTotalMask
         }
 
-        function getOnLoad() {
-            getProduct()
-            getCart()
+        async function getOnLoad() {
+            await getProduct()
+            await getCart()
         }
 
         function number_format(x) {
