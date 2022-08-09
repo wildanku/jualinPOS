@@ -42,12 +42,9 @@
         @php $withSidebar = $withSidebar ?? true; $withHeader = $withHeader ?? true; @endphp
         @include('layouts.alert')
         @if($withSidebar) 
-        <div class="max-w-screen-2xl mx-auto p-6 relative">
-            <div class="absolute">
-                @include('layouts.sidebar')
-            </div>
-            
-            <div class="lg:ml-36 pt-2 px-4 ">
+        <div class="max-w-screen-2xl flex gap-4 mx-auto p-4 md:p-6 relative">
+            @include('layouts.sidebar')
+            <div class="w-full md:pt-2 md:px-4 ">
                 @if($withHeader) 
                 @include('layouts.header')
                 @endif

@@ -2,7 +2,8 @@
 
 return [
     'title' => 'JualinPOS',
-    'pos' => 'Point of Sales',
+    'home' => 'Home',
+    'pos' => 'POS',
     'pos.cashier' => 'Cashier App',
     'pos.transaction' => 'Transaction',
     'inventory' => 'Inventory',
@@ -12,5 +13,6 @@ return [
     'setting.user' => 'Pengguna',
     'setting.tax' => 'Pajak',
     'setting.company' => 'Perusahaan',
-    'insight' => 'Insight'
+    'insight' => 'Insight',
+    'personal' => 'Personal'
 ];

@@ -1,4 +1,4 @@
-<div id="canvasPrint" class="struk bg-white p-2 font-mono" style="display: 0; width: 400px">
+<div id="canvasPrint" class="struk bg-white p-2 font-mono" style="display: none; width: 400px">
     <div id="insideCanvas">
         <div style="display: flex; justify-content:center; padding: 10px 0;">
             {{-- <img src="{{ asset('images/logo_delapan_square.png') }}" style="width: 100px" alt=""> --}}

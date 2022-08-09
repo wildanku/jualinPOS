@@ -21,7 +21,7 @@
             </div>
             <div>
                 <span>Change Amount</span>
-                <p class="text-3xl font-bold">Rp. {{number_format($transaction->changeAmount)}}</p>
+                <p class="text-3xl font-bold">Rp. {{number_format($transaction->change_amount)}}</p>
             </div>
             <div>
                 <span>Payment Method</span>
