@@ -202,9 +202,9 @@
         async function getOnLoad() {
             await getProduct()
             await getCart()
-            setInterval(() => {
-                getCart()
-            }, 1000);
+            // setInterval(() => {
+            //     getCart()
+            // }, 1000);
         }
 
         function number_format(x) {
