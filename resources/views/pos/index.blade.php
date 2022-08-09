@@ -152,20 +152,6 @@
         window.onload = getOnLoad()
 
         $(document).ready(function() {
-			$('.minus').click(function () {
-				var $input = $(this).parent().find('input');
-				var count = parseInt($input.val()) - 1;
-				count = count < 0 ? 0 : count;
-				$input.val(count);
-				$input.change();
-				return false;
-			});
-			$('.plus').click(function () {
-				var $input = $(this).parent().find('input');
-				$input.val(parseInt($input.val()) + 1);
-				$input.change();
-				return false;
-			});
 
             $("#customProductName").on('input', function() {
                 let vals = $(this).val()
@@ -345,42 +331,42 @@
             })
         }
 
-        function addProduct(el, productId) {
+        async function addProduct(el, productId) {
             let inputVal = $(el).parent().find('.product-amount').val();
             let amount = parseInt(inputVal)+1;
 
-            createCart(amount, productId);
+            await createCart(amount, productId);
             $(el).parent().find('.product-amount').val(amount);
         }
 
-        function minusProduct(el, productId) {
+        async function minusProduct(el, productId) {
             let inputVal = $(el).parent().find('.product-amount').val();
             let amount = parseInt(inputVal)-1;
 
             if(amount < 0) {
                 return false;
             }
-            createCart(amount, productId);
+            await createCart(amount, productId);
             $(el).parent().find('.product-amount').val(amount);
         }
 
-        function changeAmount(el, productId, type) {
+        async function changeAmount(el, productId, type) {
             let amount = $(el).parent().find('.product-amount').val();
 
             if(type === 'custom') {
-                changeAmountCustom(amount, productId);
+                await changeAmountCustom(amount, productId);
             } else {
-                createCart(amount, productId);
+                await createCart(amount, productId);
             }
             
             $(el).parent().find('.product-amount').val(amount);
         }
 
-        function deleteItemCart(productId, type) {
+        async function deleteItemCart(productId, type) {
             if(type === 'custom') {
-                changeAmountCustom(0, productId);
+                await changeAmountCustom(0, productId);
             } else {
-                createCart(0, productId);
+                await createCart(0, productId);
             }
         }
 
