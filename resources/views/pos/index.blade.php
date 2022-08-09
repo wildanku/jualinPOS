@@ -373,14 +373,14 @@
             }
         }
 
-        function createCart(amount, productId) {
+        async function createCart(amount, productId) {
             let data = {
                 _token: "{{ csrf_token() }}",
                 product_id: productId,
                 amount: amount
             }
 
-            $.ajax({
+            await $.ajax({
                 url: `{{ route('ajax.cart.create') }}`,
                 type: "POST",
                 data: data,
@@ -390,7 +390,7 @@
             })
 
             getProduct()
-            getCart()
+            await getCart()
         }
 
         function createCartCustom() {
