@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 
-                <div class="absolute top-0 left-0 flex justify-center items-center w-full" style="height: 50vh" id="noCart">
+                <div class="absolute top-0 left-0 flex justify-center items-center w-full" style="height: 50vh; display:none" id="noCart">
                     <div class="">
                         <img style="width: 150px" src="{{ asset('images/no_cart.png') }}" alt="">
                         <div class="uppercase text-center mt-4 text-gray-600">No Cart</div>
@@ -202,6 +202,9 @@
         async function getOnLoad() {
             await getProduct()
             await getCart()
+            setInterval(() => {
+                getCart()
+            }, 1000);
         }
 
         function number_format(x) {
@@ -209,7 +212,7 @@
         }
 
         function getCart() {
-            $("#noCart").hide()
+            // $("#noCart").hide()
             $.ajax({
                 url: `{{ route('ajax.cart.get') }}`,
                 type: "GET",
@@ -217,7 +220,7 @@
                     let cartsDOM = $("#listCart")
                     cartsDOM.empty()
                     if(res.data.carts.length > 0) {
-                        
+                        $("#noCart").hide()
                         for(let i = 0; i < res.data.carts.length; i++) {
                             cartsDOM.append(cartDOM(res.data.carts[i]))
                         }
