@@ -393,7 +393,7 @@
             await getCart()
         }
 
-        function createCartCustom() {
+        async function createCartCustom() {
             
             let data = {
                 _token: "{{ csrf_token() }}",
@@ -401,7 +401,7 @@
                 price: $("#customProductPrice").val()
             }
 
-            $.ajax({
+            await $.ajax({
                 url: `{{ route('ajax.cart.create.custom') }}`,
                 type: "POST",
                 data: data,
@@ -414,10 +414,10 @@
             $("#customProductName").val('');
             $("#customProductPrice").val('');
             getProduct()
-            getCart()
+            await getCart()
         }
 
-        function changeAmountCustom(amount, productId)
+        async function changeAmountCustom(amount, productId)
         {
             let data = {
                 _token: "{{ csrf_token() }}",
@@ -425,7 +425,7 @@
                 product_id: productId
             }
 
-            $.ajax({
+            await $.ajax({
                 url: `{{ route('ajax.cart.create.custom') }}`,
                 type: "POST",
                 data: data,
@@ -435,7 +435,7 @@
             })
 
             getProduct()
-            getCart()
+            await getCart()
         }
 
         function clearCart() {
