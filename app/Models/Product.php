@@ -105,5 +105,10 @@ class Product extends Model
         return $userCart ? $userCart->amount ?? 0 : 0;
     }
 
+    public function pos_transactions()
+    {
+        return $this->hasMany(PosTransactionDetail::class);
+    }
+
     
 }

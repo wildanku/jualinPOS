@@ -22,7 +22,7 @@ class ProductsPosResource extends ResourceCollection
                 'name' => $item->name,
                 'sell_price' => [
                     'num' => $item->sell_price_after_tax() ?? 0,
-                    'text' => $item->sell_price_after_tax() ? 'Rp. '.number_format($item->sell_price_after_tax() ?? 0) : 0
+                    'text' => $item->sell_price_after_tax() ? currency()->symbol.' '.number_format($item->sell_price_after_tax() ?? 0) : 0
                 ],
                 'image' => $item->photo ? asset($item->photo) : asset('images/no_product.png'),
                 'is_tracked' => $item->is_tracked,

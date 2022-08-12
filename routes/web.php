@@ -1,10 +1,13 @@
 <?php
 
 use App\Http\Controllers\Api\CartController;
+use App\Http\Controllers\Api\PosTransactionController;
 use App\Http\Controllers\Api\ProductController as ApiProductController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PosController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserManagementController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
@@ -37,9 +40,28 @@ Route::middleware('auth')->group(function() {
 
     Route::prefix('dashboard')->group(function() {
         Route::get('/', [DashboardController::class,'index'])->name('dashboard');
-        Route::resource('product',ProductController::class);
+    });
 
-        Route::post('/product/import', [ProductController::class,'import'])->name('product.import');
+
+    Route::resource('product',ProductController::class);
+
+    Route::post('/product/import', [ProductController::class,'import'])->name('product.import');
+
+    Route::prefix('setting')->group(function() {
+
+        Route::controller(SettingController::class)->group(function() {
+            Route::get('/general','general')->name('setting.general');
+            Route::post('/general','updateGeneral')->name('setting.general.update');
+        });
+
+        Route::controller(UserManagementController::class)->prefix('user')->group(function() {
+            Route::get('/','index')->name('setting.user.index');
+            Route::post('/','store')->name('setting.user.store');
+            Route::delete('/{user}','destroy')->name('setting.user.destroy');
+            Route::put('/{user}/update','update')->name('setting.user.update');
+            Route::put('/{user}/update-pass','updatePass')->name('setting.user.update-pass');
+        });
+
     });
 
     Route::prefix('ajax')->name('ajax.')->group(function() {
@@ -56,6 +78,11 @@ Route::middleware('auth')->group(function() {
             Route::post('/delete-cart', 'clear')->name('delete');
 
             Route::post('/add-custom-cart', 'addCustomCart')->name('customCart');
+        });
+
+        Route::controller(PosTransactionController::class)->prefix('pos')->group(function() {
+            Route::get('/incomes','getIncome')->name('pos.income');
+            Route::get('/product-best-selling','productBestSelling')->name('pos.product-best-selling');
         });
     });
 });

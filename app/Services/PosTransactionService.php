@@ -9,6 +9,8 @@ use App\Models\PosTransactionDetail;
 use App\Models\TaxTransaction;
 use App\Models\Transaction;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -127,7 +129,7 @@ Class PosTransactionService
         if($type == 'daily') {
             $transactions = $transactions
                                 ->select(
-                                    DB::raw('DATE(created_at) as date'),
+                                    DB::raw('DATE_FORMAT(created_at, "%d %M %Y") as date'),
                                     DB::raw('sum(grandTotal) as grand_total'),
                                     DB::raw('count(id) as transaction_num')
                                 )
@@ -153,7 +155,7 @@ Class PosTransactionService
         if($type == 'monthly') {
             $transactions = $transactions
                                 ->select(
-                                    DB::raw('MONTH(created_at) as date'),
+                                    DB::raw('DATE_FORMAT(created_at,"%M") as date'),
                                     DB::raw('sum(grandTotal) as grand_total'),
                                     DB::raw('count(id) as transaction_num')
                                 )
@@ -176,4 +178,104 @@ Class PosTransactionService
 
         return $transactions;
     }
+
+    public function incomeChart($type = 'daily')
+    {
+        $transactions = new PosTransaction();
+        $datasets = [];
+        if($type == 'daily') {
+            $start = Carbon::now()->subMonth(1);
+            $end = Carbon::now();
+            $transactions = $transactions
+                                ->whereBetween('created_at',[$start, $end])
+                                ->select(
+                                    DB::raw('DATE_FORMAT(created_at, "%d/%m") as date'),
+                                    DB::raw('sum(grandTotal) as grand_total'),
+                                    DB::raw('count(id) as transaction_num')
+                                )
+                                ->groupBy('date')
+                                ->orderBy('date','desc')
+                                ->get();
+                                
+            for($date = $start->copy(); $date->lte($end->copy()); $date->addDay()) {
+                $labels[] = $date->format('d/m');
+                $dateFilters[] = $date->format('d/m/y');
+            }
+                                
+        }
+
+        if($type == 'weekly') {
+            $start = Carbon::now()->subMonth(3);
+            $end = Carbon::now();
+            $transactions = $transactions
+                                ->whereBetween('created_at',[$start, $end])
+                                ->select(
+                                    DB::raw('WEEK(created_at) as date'),
+                                    DB::raw('sum(grandTotal) as grand_total'),
+                                    DB::raw('count(id) as transaction_num')
+                                )
+                                ->groupBy('date')
+                                ->orderBy('date','desc')->get();
+            
+            
+            foreach (CarbonPeriod::create($start, '1 week', Carbon::now()) as $month) {
+                $labels[] = $month->format('W');
+            }
+        }
+
+        if($type == 'monthly') {
+            $start = Carbon::now()->subMonth(11);
+            $end = Carbon::now();
+            $transactions = $transactions
+                                ->whereBetween('created_at',[$start, $end])
+                                ->select(
+                                    DB::raw('DATE_FORMAT(created_at,"%m/%y") as date'),
+                                    DB::raw('sum(grandTotal) as grand_total'),
+                                    DB::raw('count(id) as transaction_num')
+                                )
+                                ->groupBy('date')
+                                ->orderBy('date','desc')->get();
+
+            foreach (CarbonPeriod::create($start, '1 month', Carbon::now()) as $month) {
+                $labels[] = $month->format('m/y');
+            }
+        }
+
+        
+
+        $datas = [];
+        for($i = 0; $i < count($labels); $i++) {
+            $transaction = $transactions->where('date',$labels[$i])->first();
+            if($transaction) {
+                array_push($datas, $transaction->grand_total);
+            } else {
+                array_push($datas, 0);
+            }
+        }
+
+        array_push($datasets, [
+            'label' => 'Income',
+            'data' => $datas,
+            'backgroundColor' => ['rgba(0,0,0,0.1)'],
+            'borderColor' => [sprintf('#%06X', mt_rand(0, 0xFFFFFF))],
+            'borderWidth' => 2
+        ]);
+
+        return [
+            'label' => $labels,
+            'datasets' => $datasets
+        ];
+    }
+
+    public function bestSellingProduct($dates = null)
+    {
+        $products = DB::table('pos_transaction_details')
+                        ->join('products','products.id','=','pos_transaction_details.product_id')
+                        ->select(DB::raw('sum(pos_transaction_details.amount) as amount'), 'products.name',DB::raw('sum(pos_transaction_details.total) as total'),'products.id as id')
+                        ->groupBy('pos_transaction_details.product_id')
+                        ->orderBy('amount','DESC')
+                        ->get()->take(20);
+        return $products; 
+    }
+
 }

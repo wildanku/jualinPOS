@@ -11,5 +11,8 @@ return [
     'inventory.add_product' => 'Tambah Produk',
     'setting' => 'Pengaturan',
     'insight' => 'Wawasan',
-    'personal' => 'Personal'
+    'personal' => 'Personal',
+    'setting.general' => 'Pengaturan Umum',
+    'setting.users' => 'Kelola Pengguna',
+    'setting.tax' => 'Pengaturan Pajak',
 ];

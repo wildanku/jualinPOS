@@ -8,7 +8,7 @@
 <div class="w-full items-start grid grid-cols-1 md:grid-cols-6 h-5/6 gap-4">
     <div class="md:col-span-4">
         <div class="w-full">
-            <input id="searchProduct" type="text" placeholder="Search Product or SKU..." class="text-xl w-full py-2 rounded-lg bg-gray-50 shadow-lg border-gray-300">
+            <input id="searchProduct" type="text" placeholder="{{__('pos.search_product')}}" class="text-xl w-full py-2 rounded-lg bg-gray-50 shadow-lg border-gray-300">
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-4 gap-3" id="products">
@@ -19,8 +19,8 @@
     <div class="hidden md:col-span-2 md:block " >
         <div class="p-4 rounded-lg bg-white shadow-lg relative" style="height: 70vh">
             <div class="flex justify-between">
-                <h3 class="text-xl">Transactions</h3>
-                <button type="button" onClick="clearCart()" class="bg-red-600 hover:bg-red-700 rounded-full py-1 px-4 text-sm text-white"><i class="fa-solid fa-times mr-2"></i> Clear</button> 
+                <h3 class="text-xl">{{__('pos.carts')}}</h3>
+                <button type="button" onClick="clearCart()" class="bg-red-600 hover:bg-red-700 rounded-full py-1 px-4 text-sm text-white"><i class="fa-solid fa-times mr-2"></i> {{__('pos.clear')}}</button> 
             </div>
 
             <div class="">
@@ -32,7 +32,7 @@
                         <span id="subTotal">Rp. 0</span>
                     </div>
                     <div class="flex justify-between items-center px-4 py-1">
-                        <span>Tax</span>
+                        <span>{{__('pos.tax')}}</span>
                         <span id="totalTax">Rp. 0</span>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
                 <i class="fa-solid fa-percent"></i> 
             </label>
             <label for="" id="buttonPay" class="py-3 px-4 text-xl text-white w-full bg-gray-500 cursor-not-allowed rounded-xl flex justify-between">
-                <span>Pay</span>
+                <span>{{__('pos.pay')}}</span>
                 <span id="grandTotal">Rp. 0</span>
             </label>
         </div>
@@ -67,10 +67,10 @@
             <div class="modal">
             <div class="modal-box relative">
                 <label for="modalCustomProduct" class="btn btn-sm bg-red-600 btn-circle absolute border-none text-white right-5 top-5">✕</label>
-                <h3 class="text-lg font-bold">Custom Product</h3>
+                <h3 class="text-lg font-bold">{{__('pos.custom_product')}}</h3>
                 <div class="py-3">
                     <div class="mb-3 relative">
-                        <label for="" class="text-xs block mb-1">Product Name</label>
+                        <label for="" class="text-xs block mb-1">{{__('pos.product_name')}}</label>
                         <input id="customProductName" type="text" class="w-full z-10 rounded border border-gray-400 py-2 px-3">
                         <small class="text-xs text-red-600" style="display: none">Product name cannot be blank</small>
 
@@ -80,12 +80,12 @@
                         </div>
                     </div>
                     <div class="mb-2">
-                        <label for="" class="text-xs block mb-1">Product Price</label>
+                        <label for="" class="text-xs block mb-1">{{__('pos.product_price')}}</label>
                         <input id="customProductPrice" type="text" class="w-full rounded border border-gray-400 py-2 px-3">
-                        <small class="text-xs text-red-600" style="display:none">Product price cannot be blank</small>
+                        <small class="text-xs text-red-600" style="display:none">{{__('pos.alert_product_empty')}}</small>
                     </div>
                     <div class="mt-2">
-                        <button id="addCartCustom" type="button" class="w-full bg-primary rounded py-2 text-center text-white">Add to Cart</button>
+                        <button id="addCartCustom" type="button" class="w-full bg-primary rounded py-2 text-center text-white">{{__('pos.add_to_cart')}}</button>
                     </div>
                 </div>
             </div>
@@ -97,7 +97,7 @@
             <div class="modal-box relative">
                 <label for="modalPay" class="btn btn-sm bg-red-600 btn-circle absolute border-none text-white right-5 top-5">✕</label>
                 {{-- <span class="leading-none">Pay</span> --}}
-                <h3 class="text-xl font-medium" class="leading-none" >Select Payment Method</h3>
+                <h3 class="text-xl font-medium" class="leading-none" >{{__('pos.select_payment')}}</h3>
                 <form action="" method="POST" id="submitPayment">
                     @csrf
                     <div class="wrapper mt-4 custom-radio">
@@ -106,13 +106,13 @@
                             <div>
                                 <div class="flex justify-start items-center label px-4 py-3">
                                     <span class="w-4 h-4 inline-block mr-2 rounded-full border border-grey flex-no-shrink "></span>
-                                    <p class="font-semibold text-xs md:text-base">Cash</p>
+                                    <p class="font-semibold text-xs md:text-base">{{__('pos.cash')}}</p>
                                 </div>
                             </div>
                         </label>
 
-                        <div class="mb-4" style="margin-top: -5px" id="cashAmount">
-                            <label for="" class="text-xs text-gray-600">Cash Amount</label>
+                        <div class="mb-4 mt-2" id="cashAmount">
+                            <label for="" class="text-xs text-gray-600">{{__('pos.cash_amount')}}</label>
                             <input type="text" name="cashAmount" class="w-full rounded border border-gray-400" id="cashTotal">
                         </div>
                         @foreach (App\Models\PaymentMethod::get()->take(6) as $item)
@@ -131,7 +131,7 @@
                     </div>
     
                     <button type="submit" class="mt-5 w-full bg-primary hover:bg-secondary py-3 px-5 text-white flex font-semibold justify-between items-center rounded-xl">
-                        <span class="text-xl">Pay</span>
+                        <span class="text-xl">{{__('pos.pay')}}</span>
                         <span class="text-xl" id="totalPayment"></span>
                     </button>
                 </form>

@@ -38,11 +38,11 @@
 
 </head>
 <body>
-    <div class="w-full min-h-screen bg-gray-100">
+    <div class="w-full min-h-screen bg-gray-50">
         @php $withSidebar = $withSidebar ?? true; $withHeader = $withHeader ?? true; @endphp
         @include('layouts.alert')
         @if($withSidebar) 
-        <div class="max-w-screen-2xl flex gap-4 mx-auto p-4 md:p-6 relative">
+        <div class="max-w-screen-2xl flex gap-4 mx-auto p-4 md:p-6 mt-12 md:mt-0 relative">
             @include('layouts.sidebar')
             <div class="w-full md:pt-2 md:px-4 ">
                 @if($withHeader) 
@@ -79,6 +79,10 @@
             if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
             return i;
         }
+
+        $(document).on('select2:open', () => {
+            document.querySelector('.select2-search__field').focus();
+        });
         </script>
 </body>
 </html>

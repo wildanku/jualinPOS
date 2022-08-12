@@ -1,4 +1,4 @@
-<div class="py-3 w-full flex justify-between items-center">
+<div class="py-3 w-full hidden md:flex justify-between items-center">
     <div class="flex gap-3">
         <a href="{{ route('dashboard') }}" id="icon" class="block md:hidden hover:brightness-110">
             <img src="{{ asset('icon-jualinhub.png') }}" class="w-12 " alt="">

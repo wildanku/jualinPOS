@@ -7,6 +7,7 @@ return [
     'save' => 'Simpan',
     'yes' => 'Iya',
     'no' => 'Tidak',
+    'cancel' => 'Batal',
     'delete_confirm' => 'Yakin ingin menghapus data ini?',
     'logout_confirm' => 'Apakah anda yakin ingin keluar?',
     'quite_pos_confirm' => 'Apakah anda yakin ingin keluar dari aplikasi kasir ini?',
@@ -16,4 +17,14 @@ return [
     'weekly' => 'Mingguan',
     'monthly' => 'Bulanan',
     'yearly' => 'Tahunan',
+    'print' => 'Cetak',
+    'search' => 'Cari',
+    'search_for' => 'Pencarian untuk',
+    'week' => 'Minggu',
+    'week_to' => 'Minggu ke-',
+    'data_not_found' => 'Data Tidak Ditemukan',
+    'delete' => 'Hapus',
+    'edit' => 'Ubah',
+    'reset' => 'Reset',
+    'reset_password' => 'Atur ulang kata sandi'
 ];

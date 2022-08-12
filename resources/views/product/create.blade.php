@@ -46,7 +46,7 @@
         <div class="md:col-span-2 rounded-lg shadow bg-white p-5">
             
             <div class="form-control mb-3  @error('photo') border border-red-600 @enderror">
-                <label for="" >{{__('product.tax')}}</label>
+                <label for="" >{{__('product.product_image')}}</label>
                 <input type="file" name="photo" id="" value="{{ old('photo') }}">
                 @error('photo') <small class="text-xs text-red-600">{{ $message }}</small>@enderror
             </div>

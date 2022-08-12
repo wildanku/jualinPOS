@@ -1,20 +1,28 @@
 @extends('layouts.default', [])
 
 @section('content')
-    <div class="flex justify-between items-center">
-        <h3 class="text-2xl">{{__('product.title')}}</h3>
+    <div class="flex justify-between items-center relative">
+        <h3 class="text-xl md:text-2xl">{{__('product.title')}}</h3>
         <div class="form-control">
-            <form action="?">
-                <div class="input-group">
-                    <input type="text" placeholder="Search…" class="input input-bordered" />
-                    <button class="btn btn-square">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+            <form action="?" class="">
+                <div class="flex">
+                    <input type="text" name="q" value="{{request('q') }}" class="w-16 md:w-32 hover:w-full py-1 rounded-l border border-gray-300" placeholder="{{__('general.search')}}...">
+                    <button class="py-1 bg-primary px-2 rounded-r flex items-center text-white font-bold">
+                        <ion-icon size="small" name="search-outline"></ion-icon>
                     </button>
                 </div>
             </form>
         </div>
     </div>
-    <a href="{{ route('product.create') }}" class="fixed md:bottom-10 bottom-16 z-50 right-2 md:right-10 bg-primary w-16 h-16 cursor-pointer hover:bg-secondary rounded-full text-white flex justify-center items-center text-4xl">
+
+    @if (request('q'))
+    <div class="pt-2 flex items-center gap-2">
+        <small class="text-sm">{{__('general.search_for')}} : {{request('q')}}</small>
+        <a href="?" class="text-red-600"><i class="fa-solid fa-times"></i></a>
+    </div>
+    @endif
+
+    <a href="{{ route('product.create') }}" class="fixed bottom-10 z-50 right-4 md:right-10 bg-primary w-12 h-12 md:w-16 md:h-16 cursor-pointer hover:bg-secondary rounded-full text-white flex justify-center items-center text-4xl">
         <ion-icon  name="add-outline"></ion-icon>
     </a>
 

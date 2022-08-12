@@ -27,15 +27,15 @@ class CartController extends Controller
                 'carts' => new CartsResource($carts['carts']),
                 'subTotal' => [
                     'num' => $carts['subTotal'],
-                    'text' => 'Rp. '.number_format($carts['subTotal'])
+                    'text' => currency()->symbol.' '.number_format($carts['subTotal'])
                 ],
                 'totalTax' => [
                     'num' => $carts['totalTax'],
-                    'text' => 'Rp. '.number_format($carts['totalTax'])
+                    'text' => currency()->symbol.' '.number_format($carts['totalTax'])
                 ],
                 'grandTotal' => [
                     'num' => $carts['grandTotal'],
-                    'text' => 'Rp. '.number_format($carts['grandTotal'])
+                    'text' => currency()->symbol.' '.number_format($carts['grandTotal'])
                 ],
             ],
             

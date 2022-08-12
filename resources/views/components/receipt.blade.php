@@ -1,9 +1,10 @@
 <div id="canvasPrint" class="struk bg-white p-2 font-mono" style="display: none; width: 400px">
     <div id="insideCanvas">
-        <div style="display: flex; justify-content:center; padding: 10px 0;">
+        <div style="text-align:center; padding: 10px 0;">
             {{-- <img src="{{ asset('images/logo_delapan_square.png') }}" style="width: 100px" alt=""> --}}
-            <h1 class="text-xl">{{ (new \App\Helper\SettingHelper)->company_name() }}</h1>
-            
+            <h1 class="text-xl" style="font-size: 16px">{{ company_name() }}</h1>
+            <span class="text-xs" style="font-size: 9px">{{ company_address() }}</span> <br>
+            <span class="text-xs" style="font-size: 9px">Phone: {{ company_phone() }}</span>
         </div>
         <div style="text-align: center; border-bottom: dashed 1.5px; padding-bottom: 5px; margin-top: -10px">
             {{-- <small style="font-size: 10px; text-align:center">{{ $transaction->shift_session->outlet->address ?? '' }}</small> <br>
@@ -12,19 +13,19 @@
         <div style=" border-bottom: dashed 1.5px; margin-top: 5px; padding-bottom: 5px">
             <table style="font-size: 9px; width: 100%;">
                 <tr>
-                    <td style="width: 30%">Operator</td>
+                    <td style="width: 30%">{{__('pos.operator')}}</td>
                     <td style="width: 70%">{{ auth()->user()->name ?? '' }}</td>
                 </tr>
                 <tr>
-                    <td style="width: 30%">Tanggal</td>
-                    <td style="width: 70%">{{ $transaction->created_at->format('d M Y, H:i') }}</td>
+                    <td style="width: 30%">{{__('pos.date')}}</td>
+                    <td style="width: 70%">{{ $transaction->created_at->translatedFormat('d M Y, H:i') }}</td>
                 </tr>
                 <tr>
                     <td style="width: 30%">ID</td>
                     <td style="width: 70%">{{ $transaction->code }}</td>
                 </tr>
                 <tr>
-                    <td style="width: 30%">Payment</td>
+                    <td style="width: 30%">{{__('pos.payment')}}</td>
                     <td style="width: 70%">{{ $transaction->payment_method_id == 0 ? 'Cash' : $transaction->payment_method->name }}</td>
                 </tr>
             </table>
@@ -47,25 +48,25 @@
             <table style="font-size: 9px; width: 100%;">
                 <tr style="padding: 0">
                     <td style="width: 60%;">
-                        <span>Total </span>
+                        <span>Sub Total </span>
                     </td>
                     <td style="width: 40%; text-align:right;">Rp.{{ number_format($transaction->total) }}</td>
                 </tr>
                 <tr>
                     <td style="width: 60%;">
-                        <span>Pajak
+                        <span>{{__('pos.tax')}} </span>
                     </td>
                     <td style="width: 40%; text-align:right; ">Rp. {{ number_format($transaction->tax) }}</td>
                 </tr>
                 <tr>
                     <td style="width: 60%;">
-                        <span>Potongan
+                        <span>{{__('pos.discount')}} </span>
                     </td>
                     <td style="width: 40%; text-align:right; ">-Rp. {{ number_format($transaction->discount) }}</td>
                 </tr>
                 <tr>
                     <td style="width: 60%;">
-                        <span>Grand Total
+                        <span>{{__('pos.grand_total')}}
                     </td>
                     <td style="width: 40%; text-align:right;">Rp. {{ number_format($transaction->grandTotal) }}</td>
                 </tr>
@@ -76,13 +77,13 @@
             <table style="font-size: 9px; width: 100%;">
                 <tr style="padding: 10px 0">
                     <td style="width: 60%;">
-                        <span>Jumlah Uang </span>
+                        <span>{{__('pos.cash_amount')}}</span>
                     </td>
                     <td style="width: 40%; text-align:right;">Rp.{{ number_format($transaction->cash_amount) }}</td>
                 </tr>
                 <tr>
                     <td style="width: 60%; padding: 5px 0">
-                        <span>Kembalian
+                        <span>{{__('pos.change')}} </span>
                     </td>
                     <td style="width: 40%; text-align:right; ">Rp. {{ number_format($transaction->change_amount) }}</td>
                 </tr>
@@ -92,7 +93,7 @@
         
 
         <div style="font-size: 10px; text-align:center; margin-top: 20px">
-            - Terima Kasih -
+            - {{__('pos.thanks')}} -
         </div>
         {{-- <div style="font-size: 9px; text-align:center; margin-top: 10px">
             <div><img src="{{ asset('images/web.png') }}" style="width: 12px" alt=""> delapanbarbershop.com </div>

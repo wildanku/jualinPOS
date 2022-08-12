@@ -30,13 +30,13 @@ class CartsResource extends ResourceCollection
                         'name' => $item->customProduct->name ?? '',
                         'price' => [
                             'num' => $item->price ?? 0,
-                            'text' => 'Rp. '.number_format($item->price ?? 0),
+                            'text' => currency()->symbol.' '.number_format($item->price ?? 0),
                         ],
                     ],
                     'amount' => $item->amount,
                     'total' => [
                         'num' => $item->amount * $item->price,
-                        'text' => 'Rp. '.number_format($item->amount * $item->price)
+                        'text' => currency()->symbol.' '.number_format($item->amount * $item->price)
                     ]
                 ]);
             } else {
@@ -52,13 +52,13 @@ class CartsResource extends ResourceCollection
                         'name' => $item->product->name,
                         'price' => [
                             'num' => $item->product->sell_price_after_tax() ?? 0,
-                            'text' => 'Rp. '.number_format($item->product->sell_price_after_tax() ?? 0),
+                            'text' => currency()->symbol.' '.number_format($item->product->sell_price_after_tax() ?? 0),
                         ],
                     ],
                     'amount' => $item->amount,
                     'total' => [
                         'num' => $item->amount * $item->product->sell_price_after_tax(),
-                        'text' => 'Rp. '.number_format($item->amount * $item->product->sell_price_after_tax())
+                        'text' => currency()->symbol.' '.number_format($item->amount * $item->product->sell_price_after_tax())
                     ]
                 ]);
             }

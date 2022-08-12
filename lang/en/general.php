@@ -8,6 +8,7 @@ return [
     'save' => 'Save',
     'yes' => 'Yes',
     'no' => 'No',
+    'cancel' => 'Cancel',
     'delete_confirm' => 'Are you sure want to delete this item?',
     'logout_confirm' => 'Are you sure want to logout?',
     'quite_pos_confirm' => 'Are you sure want to quite POS Apps?',
@@ -18,4 +19,14 @@ return [
     'weekly' => 'Weekly',
     'monthly' => 'Monthly',
     'yearly' => 'Yearly',
+    'print' => 'Print',
+    'search' => 'Search',
+    'search_for' => 'Pencarian untuk',
+    'week' => 'Week',
+    'week_to' => 'Week ',
+    'data_not_found' => 'Data not found',
+    'delete' => 'Delete',
+    'edit' => 'Edit',
+    'reset' => 'Reset',
+    'reset_password' => 'Reset Password'
 ];
