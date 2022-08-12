@@ -27,9 +27,9 @@ class SettingController extends Controller
                 'value' => $request->company_phone
             ]);
 
-            Setting::updateOrCreate(['name' => 'company_phone'], [
-                'name' => 'company_phone',
-                'value' => $request->company_phone
+            Setting::updateOrCreate(['name' => 'company_address'], [
+                'name' => 'company_address',
+                'value' => $request->company_address
             ]);
 
             Setting::updateOrCreate(['name' => 'currency'], [
