@@ -97,7 +97,7 @@
             <div class="py-2">
                 <div class="flex items-center gap-4">
                     <ion-icon class="text-gray-600 text-2xl" name="cube-outline"></ion-icon>
-                    <span class="text-lg">{{__('sidebar.pos')}}</span>
+                    <span class="text-lg">{{__('sidebar.inventory')}}</span>
                 </div>
                 <div class="ml-10 mt-1 gap-1 grid grid-cols-1">
                     <a href="{{ route('product.index') }}" class="block py-1 bg-blue-50 text-secondary rounded px-2">{{ __('sidebar.inventory.product') }}</a>
