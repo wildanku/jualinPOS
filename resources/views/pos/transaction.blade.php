@@ -20,13 +20,19 @@
                 <p class="text-3xl font-bold">Rp. {{number_format($transaction->grandTotal)}}</p>
             </div>
             <div>
-                <span>{{__('pos.change')}}</span>
-                <p class="text-3xl font-bold">Rp. {{number_format($transaction->change_amount)}}</p>
-            </div>
-            <div>
                 <span>{{__('pos.payment_method')}}</span>
                 <p class="text-2xl font-bold">{{ $transaction->payment_method_id == 0 ? 'Cash' : $transaction->payment_method->name }}</p>
             </div>
+            @if ($transaction->payment_method == 0)
+            <div>
+                <span>{{__('pos.cash_amount')}}</span>
+                <p class="text-3xl font-bold">Rp. {{number_format($transaction->cash_amount)}}</p>
+            </div>
+            <div class="text-red-600">
+                <span>{{__('pos.change')}}</span>
+                <p class="text-3xl font-bold">Rp. {{number_format($transaction->change_amount)}}</p>
+            </div>
+            @endif
         </div>
 
         <div class="py-4 border-t border-gray-200">
