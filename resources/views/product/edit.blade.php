@@ -6,7 +6,7 @@
         <h3 class="text-2xl m-0">Edit {{ $product->name }}</h3>
     </div>
 
-    <form action="{{ route('product.update',$product->id) }}" method="POST" enctype="multipart/form-data">
+    <form id="formProduct" action="{{ route('product.update',$product->id) }}" method="POST" enctype="multipart/form-data">
     @csrf @method('PUT')
     <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mt-6 items-start">
         <div class="md:col-span-3 bg-white shadow rounded-lg p-5">
