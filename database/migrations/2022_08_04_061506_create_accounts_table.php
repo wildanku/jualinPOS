@@ -26,11 +26,11 @@ return new class extends Migration
         });
 
         Schema::table('taxes', function(Blueprint $table) {
-            $table->foreignId('account_id');
+            $table->foreignId('account_id')->nullable();
         });
 
         Schema::table('payment_methods', function(Blueprint $table) {
-            $table->foreignId('account_id');
+            $table->foreignId('account_id')->nullable();
         });
     }
 

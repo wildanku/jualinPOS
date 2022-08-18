@@ -28,6 +28,10 @@
             font-size: 40px;
         }
 
+        .alert {
+            z-index: 999;
+        }
+
         .sidemenu:hover ion-icon,
         .sidemenu:hover span,
         .sidemenu.active ion-icon,

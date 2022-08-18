@@ -15,4 +15,9 @@ return [
     'company_phone' => 'No Telpon Perusahaan',
     'company_email' => 'Email Perusahaan',
     'currency'  => 'Kurs',
+
+    'manage_tax' => 'Kelola Pajak',
+    'tax_name' => 'Nama Pajak',
+    'percentage' => 'Persentase',
+    'add_tax' => 'Tambah Pajak'
 ];

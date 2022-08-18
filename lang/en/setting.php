@@ -15,4 +15,5 @@ return [
     'company_phone' => 'Company Phone',
     'company_email' => 'Company Email',
     'currency'  => 'Currency',
+    
 ];

@@ -200,8 +200,8 @@
         }
 
         async function getOnLoad() {
-            await getProduct()
-            await getCart()
+            getProduct()
+            getCart()
             // setInterval(() => {
             //     getCart()
             // }, 1000);
@@ -249,48 +249,55 @@
             });
         }
 
-        function getProduct() {
+        async function getProduct() {
             
             let data = {q: $("#searchProduct").val()}
 
-            $.ajax({
+            let products = {};
+
+            await $.ajax({
                 url: `{{ route('ajax.product.get') }}`,
                 type: "GET",
                 data: data,
                 success: function (res) {
-                    let productsDOM = $("#products")
-                    productsDOM.empty()
-                    for(let i = 0; i < res.data.length; i++) {
-                        productsDOM.append(productDOM(res.data[i]))
-                    }
+                    products = res;
                 }
+                
             })
+
+            let productsDOM = $("#products")
+            productsDOM.empty()
+            for(let i = 0; i < products.data.length; i++) {
+                productsDOM.append(productDOM(products.data[i]))
+            }
         }
 
-        function getCustomProduct(q) {
+        async function getCustomProduct(q) {
             let data = {q: q}
-            
-            $.ajax({
+            let customProducts = {};
+            await $.ajax({
                 url: `{{ route('ajax.product.custom') }}`,
                 type: "GET",
                 data: data,
                 success: function (res) {
-                    let vals = $("#customProductName").val()
-                    if(vals.length < 1) {
-                        $("#customProductSuggest").hide()
-                    } else {
-                        $("#customProductSuggest").show()
-                    }
-                    $("#customProductSuggest").empty()
-                    if(res.data.length > 0) {
-                        for(let i = 0; i < res.data.length; i++) {
-                            $("#customProductSuggest").append(customProductDOM(res.data[i].name, res.data[i].id, res.data[i].price))
-                        }
-                    } else {
-                        $("#customProductSuggest").append(addCustomProductDOM(vals))
-                    }
+                    customProducts = res;
                 }
             });
+
+            let vals = $("#customProductName").val()
+            if(vals.length < 1) {
+                $("#customProductSuggest").hide()
+            } else {
+                $("#customProductSuggest").show()
+            }
+            $("#customProductSuggest").empty()
+            if(customProducts.data.length > 0) {
+                for(let i = 0; i < customProducts.data.length; i++) {
+                    $("#customProductSuggest").append(customProductDOM(customProducts.data[i].name, customProducts.data[i].id, customProducts.data[i].price))
+                }
+            } else {
+                $("#customProductSuggest").append(addCustomProductDOM(vals))
+            }
         }
 
         function addCustomProductDOM(name) {

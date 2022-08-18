@@ -64,10 +64,10 @@
                     <td class="md:text-center py-2 align-middle" style="width: 25%">
                         <div class="flex justify-center w-full items-center" style="gap: 15px">
                             {{-- <a href="" class="text-xs text-blue-600 hover:text-blue-700"><ion-icon size="small" name="eye"></ion-icon></a> --}}
-                            <a href="{{ route('product.edit',$item->id) }}" class="text-lg md:text-xs text-orange-500 hover:text-yellow-600"><i class="fa-solid fa-edit"></i></a>
+                            <a href="{{ route('product.edit',$item->id) }}" class="text-lg text-orange-500 hover:text-yellow-600"><i class="fa-solid fa-edit"></i></a>
                             <form action="{{ route('product.destroy',$item->id) }}" method="POST">
                             @csrf @method('DELETE')
-                            <button class="text-red-600 text-lg md:text-xs" onclick="return confirm('{{__('general.delete_confirm')}}')"> <i class="fa-solid fa-trash"></i> </button>
+                            <button class="text-red-600 text-lg" onclick="return confirm('{{__('general.delete_confirm')}}')"> <i class="fa-solid fa-trash"></i> </button>
                             </form>
                         </div>
                         

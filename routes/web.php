@@ -7,6 +7,7 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PosController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TaxController;
 use App\Http\Controllers\UserManagementController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
@@ -52,6 +53,7 @@ Route::middleware('auth')->group(function() {
         Route::controller(SettingController::class)->group(function() {
             Route::get('/general','general')->name('setting.general');
             Route::post('/general','updateGeneral')->name('setting.general.update');
+            Route::resource('taxes',TaxController::class)->except('show','edit','create');
         });
 
         Route::controller(UserManagementController::class)->prefix('user')->group(function() {

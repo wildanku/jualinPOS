@@ -54,6 +54,9 @@
                 <li>
                     <a href="{{ route('setting.user.index') }}" class="p-2">{{__('sidebar.setting.users')}}</a>
                 </li>
+                <li>
+                    <a href="{{ route('taxes.index') }}" class="p-2">{{__('setting.manage_tax')}}</a>
+                </li>
             </ul>
         </div>
     
@@ -113,6 +116,7 @@
                 <div class="ml-10 mt-1 gap-1 grid grid-cols-1">
                     <a href="{{ route('setting.general') }}" class="block py-1 bg-blue-50 text-secondary rounded px-2">{{ __('sidebar.setting.general') }}</a>
                     <a href="{{ route('setting.user.index') }}" class="block py-1 bg-blue-50 text-secondary rounded px-2">{{ __('sidebar.setting.users') }}</a>
+                    <a href="{{ route('taxes.index') }}" class="block py-1 bg-blue-50 text-secondary rounded px-2">{{ __('setting.manage_tax') }}</a>
                 </div>
             </div>
         </div>
