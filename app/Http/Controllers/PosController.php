@@ -13,6 +13,8 @@ class PosController extends Controller
 
     public function __construct()
     {
+        setlocale(LC_TIME, 'id_ID');
+        \Carbon\Carbon::setLocale('id');
         $this->posTransactionService = new PosTransactionService();
     }
 

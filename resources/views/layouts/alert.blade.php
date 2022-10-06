@@ -2,6 +2,8 @@
     <style>
       .alert {
         z-index: 999;
+        text-align: center;
+        padding: 10px;
       }
     </style>
 @endpush
@@ -26,10 +28,10 @@
 
 @push('js')
 <script>
-    // window.setTimeout(function() {
-    //   $(".alert").fadeTo(200, 0).slideUp(200, function(){
-    //     $(this).remove(); 
-    //   });
-    // }, 5000);
+    window.setTimeout(function() {
+      $(".alert").fadeTo(200, 0).slideUp(200, function(){
+        $(this).remove(); 
+      });
+    }, 3000);
   </script>
 @endpush

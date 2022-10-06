@@ -106,22 +106,38 @@ Class ProductService
                 'tax_id' => $request->tax_id,
                 'tax_type' => $request->tax_type
             ]);
-
-            if($product->buy_prices()->count() > 0 && $request->buy_price != $product->buy_price()) {
-                
-                ProductPrice::create([
-                    'product_id' => $product->id,
-                    'type' => 'buy_price',
-                    'price' => $request->buy_price
-                ]);
+            
+            if($request->buy_price) {
+                if(!$product->buy_prices()) {
+                    ProductPrice::create([
+                        'product_id' => $product->id,
+                        'type' => 'buy_price',
+                        'price' => $request->buy_price
+                    ]);
+                } elseif ($product->buy_prices()->count() > 0 && $request->buy_price != $product->buy_price()) {
+                    
+                    ProductPrice::create([
+                        'product_id' => $product->id,
+                        'type' => 'buy_price',
+                        'price' => $request->buy_price
+                    ]);
+                }
             }
 
-            if($product->sell_prices()->count() > 0 && $request->sell_price != $product->sell_price()) {
-                ProductPrice::create([
-                    'product_id' => $product->id,
-                    'type' => 'sell_price',
-                    'price' => $request->sell_price
-                ]);
+            if($request->sell_price) {
+                if(!$product->sell_prices()) {
+                    ProductPrice::create([
+                        'product_id' => $product->id,
+                        'type' => 'sell_price',
+                        'price' => $request->sell_price
+                    ]);
+                } elseif($product->sell_prices()->count() > 0 && $request->sell_price != $product->sell_price()) {
+                    ProductPrice::create([
+                        'product_id' => $product->id,
+                        'type' => 'sell_price',
+                        'price' => $request->sell_price
+                    ]);
+                }
             }
 
             if($request->is_tracked == 'yes') {

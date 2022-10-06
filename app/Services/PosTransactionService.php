@@ -129,9 +129,9 @@ Class PosTransactionService
         if($type == 'daily') {
             $transactions = $transactions
                                 ->select(
-                                    DB::raw('DATE_FORMAT(created_at, "%d %M %Y") as date'),
+                                    DB::raw('DATE_FORMAT(created_at, "%Y-%m-%d") as date'),
                                     DB::raw('sum(grandTotal) as grand_total'),
-                                    DB::raw('count(id) as transaction_num')
+                                    DB::raw('count(id) as transaction_num'),
                                 )
                                 ->groupBy('date')
                                 ->orderBy('date','desc')
@@ -155,7 +155,7 @@ Class PosTransactionService
         if($type == 'monthly') {
             $transactions = $transactions
                                 ->select(
-                                    DB::raw('DATE_FORMAT(created_at,"%M") as date'),
+                                    DB::raw('DATE_FORMAT(created_at,"%m") as date'),
                                     DB::raw('sum(grandTotal) as grand_total'),
                                     DB::raw('count(id) as transaction_num')
                                 )

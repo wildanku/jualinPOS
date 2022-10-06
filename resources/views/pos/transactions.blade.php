@@ -84,7 +84,14 @@
                             @if (request('type') == 'weekly')
                             {{__('general.week_to')}}
                             @endif
+                            
+                            @if(request('type') == 'daily')
+                            {{\Carbon\Carbon::parse($item->date)->format('d M Y')}}
+                            @elseif(request('type') == 'monthly')
+                            {{\Carbon\Carbon::create()->month($item->date)->isoFormat('MMMM')}}
+                            @else 
                             {{$item->date}}
+                            @endif
                         </td>
                         <td class="text-sm md:text-md text-right">Rp. {{number_format($item->grand_total)}}</td>
                         <td class="hidden md:table-cell text-sm md:text-md text-center">{{$item->transaction_num}}</td>
