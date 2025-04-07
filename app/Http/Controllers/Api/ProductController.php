@@ -7,6 +7,7 @@ use App\Http\Resources\ProductApiResource;
 use App\Http\Resources\ProductsPosResource;
 use App\Http\Resources\ProductsResource;
 use App\Models\CustomProduct;
+use App\Models\Product;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -22,12 +23,30 @@ class ProductController extends Controller
 
     public function productApi(Request $request)
     {
-        $products = $this->productService->get($request);
+        $query = Product::query();
 
-        return response([
+        if ($search = $request->input('q')) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                ->orWhere('sku', 'like', '%' . $search . '%');
+            });
+        }
+
+        $perPage = $request->input('offset', 20); // Default 20 items per page
+        $products = $query->paginate($perPage);
+
+        return response()->json([
             'http_code' => 200,
-            'success'   => true,
-            'data'      => new ProductApiResource($products)
+            'success' => true,
+            'data' => ProductApiResource::collection($products),
+            'pagination' => [
+                'total' => $products->total(),
+                'per_page' => $products->perPage(),
+                'current_page' => $products->currentPage(),
+                'last_page' => $products->lastPage(),
+                'from' => $products->firstItem(),
+                'to' => $products->lastItem(),
+            ],
         ]);
     }
 
