@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductApiResource;
 use App\Http\Resources\ProductsPosResource;
 use App\Http\Resources\ProductsResource;
 use App\Models\CustomProduct;
@@ -17,6 +18,17 @@ class ProductController extends Controller
     public function __construct()
     {
         $this->productService = new ProductService();    
+    }
+
+    public function productApi(Request $request)
+    {
+        $products = $this->productService->get($request);
+
+        return response([
+            'http_code' => 200,
+            'success'   => true,
+            'data'      => new ProductApiResource($products)
+        ]);
     }
 
     public function productsPos(Request $request)

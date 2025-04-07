@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class ProductsPosResource extends ResourceCollection
+class ProductApiResource extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -30,7 +30,6 @@ class ProductsPosResource extends ResourceCollection
                     'num' => $item->latest_stock() ?? 0,
                     'text' => $item->is_tracked == 1 ? $item->latest_stock().' left' : 'not tracked'
                 ],
-                'in_cart' => $item->getCart() ?? null
             ]);
         }
 
