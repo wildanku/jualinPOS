@@ -25,8 +25,8 @@ class ProductController extends Controller
 
         return response([
             'http_code' => 200,
-            'success' => true,
-            'data' => new ProductsPosResource($products)
+            'success'   => true,
+            'data'      => new ProductsPosResource($products)
         ]);
     }
 
